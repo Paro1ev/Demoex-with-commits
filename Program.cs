@@ -3,8 +3,11 @@ List<Order> repo = [
 
     ];
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder();
+builder.Services.AddCors();
 var app = builder.Build();
+
+app.UseCors(option => option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 string message = "";
 
@@ -55,7 +58,6 @@ double get_average_time_to_complete() =>
     repo.FindAll(x => x.Status == "выполнено")
     .Select(x => x.EndDate.Value.DayNumber - x.StartDate.DayNumber)
     .Sum() / complete_count();
-
 
 app.MapGet("/stat", () => new
 {
