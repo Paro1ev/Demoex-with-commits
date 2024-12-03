@@ -17,6 +17,8 @@ app.MapGet("/orders", (int param = 0) =>
     return new {repo, message = buffer};
 });
 
+app.MapGet("/create", ([AsParameters] Order dto) => repo.Add(dto));
+
 app.Run();
 
 
